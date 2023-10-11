@@ -4,6 +4,7 @@ A tree is height balanced if difference between heights of left and right subtre
 link-- > https://practice.geeksforgeeks.org/problems/check-for-balanced-tree/1
 
 solution-- >
+ class solution{
  pair<bool, int> solve(Node *root)
 {
     if (root == NULL)
