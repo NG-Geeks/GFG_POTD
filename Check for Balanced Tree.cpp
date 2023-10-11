@@ -37,3 +37,5 @@ bool isBalanced(Node *root)
     if (root == NULL)
         return true;
     return solve(root).first;
+}
+};
