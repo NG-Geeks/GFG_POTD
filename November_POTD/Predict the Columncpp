@@ -1,0 +1,25 @@
+Predict the Column
+Given a matrix(2D array) M of size N*N consisting of 0s and 1s only. The task is to find the column with maximum number of 0s. If more than one column exists, print the one which comes first. If the maximum number of 0s is 0 then return -1.
+
+
+Solution::
+class Solution{
+    public:
+    int columnWithMaxZeros(vector<vector<int>>arr,int N){
+        
+       int ans=-1;
+       int maxi = 0;
+       for(int i=0;i<arr[0].size();i++){
+           int cnt=0;
+           for(int j=0;j<arr.size();j++){
+               if(arr[j][i]==0)cnt++;
+           }
+           if(cnt > 0 && cnt >maxi ){
+               ans = i;
+               maxi = cnt;
+           }
+       }
+       return ans;
+        
+    }
+};    
