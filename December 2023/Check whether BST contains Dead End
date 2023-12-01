@@ -1,0 +1,16 @@
+Check whether BST contains Dead End
+
+Given a Binary Search Tree that contains unique positive integer values greater than 0. The task is to complete the function isDeadEnd which returns true if the BST contains a dead end else returns false. Here Dead End means a leaf node, at which no other node can be inserted.
+Solution::
+class Solution{
+    bool solve(Node * root , int lower , int upper){
+        if(!root)return 0;
+        if(root->data == lower && root->data == upper)return 1;
+        return solve(root->left , lower , root->data -1 ) || solve(root->right , root->data+1 , upper);
+    }
+  public:
+    bool isDeadEnd(Node *root)
+    {
+       return solve(root, 1,INT_MAX);
+    }
+};
