@@ -1,6 +1,8 @@
 Subarray with 0 sum
 
-Given an array of integers. Find if there is a subarray (of size at-least one) with 0 sum. You just need to return true/false depending upon whether there is a subarray present with 0-sum or not. Printing will be taken care by the driver code.Time Complexity::
+Given an array of integers. Find if there is a subarray (of size at-least one) with 0 sum.
+You just need to return true/false depending upon whether there is a subarray present with 0-sum or not. Printing will be taken care by the driver code.
+Time Complexity::
     O(N)
 
 Space Complexity::
