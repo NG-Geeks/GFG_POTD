@@ -1,0 +1,40 @@
+Question :: Array Pair Sum Divisibility Problem
+
+Given an array of integers nums and a number k, write a function that returns true if given array can be divided into pairs such that sum of every pair is divisible by k.
+
+Solution::
+
+Complexity
+Time complexity:
+    O(N )
+Space complexity:
+    O(N )
+Code
+#pragma gcc optimize("03")
+auto init = [] (){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    return 'c';
+}();
+
+class Solution {
+  public:
+    bool canPair(vector<int> nums, int k) {
+        if(nums.size()&1)return 0;
+        
+        unordered_map<int,int>m;
+        for(auto &i:nums){
+            int l = i%k;
+            int q = (k - l)%k;
+            if(m.count(q)){
+                m[q]--;
+                if(m[q]==0)m.erase(q);;
+            }
+            else{
+                m[l]++;
+            }
+        }
+        return m.size()==0;
+    }
+};
