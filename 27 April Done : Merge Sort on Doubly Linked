@@ -1,0 +1,66 @@
+Question ::
+Merge Sort on Doubly Linked List
+Given Pointer/Reference to the head of a doubly linked list of n nodes, the task is to Sort the given doubly linked list using Merge Sort in both non-decreasing and non-increasing order.
+Time Complexity: O(N*log(N))
+Space Complexity : O(1)
+Solution ::
+class Solution {
+    Node *findMid(Node * head){
+        Node * slow = head;
+        Node * fast=head->next;
+        while(fast && fast->next){
+            fast = fast->next->next;
+            slow = slow->next;
+        }
+        return slow;
+    }
+    Node * merge(Node * left, Node * right){
+        if(left == NULL)return right;
+        if(right == NULL)return left;
+        Node * ans = new Node(-1);
+        Node * temp = ans;
+        while(left && right){
+            if(left->data < right->data){
+                temp->next =left;
+                left->prev = temp;
+                temp = left;
+                left = left->next;
+            }
+            else{
+                temp->next = right;
+                right->prev = temp;
+                temp = right;
+                right  = right->next;
+            }
+        }
+        while(left){
+            temp->next =left;
+            left->prev = temp;
+            temp = left;
+            left = left->next;
+        }
+        while(right){
+             temp->next =right;
+             right->prev = temp;
+             temp = right;
+             right = right->next;
+        }
+        ans = ans->next;
+        ans->prev=NULL;
+        return ans;
+    }
+    Node * solve( struct Node * head ){
+        if(!head || !head->next)return head;
+        Node * mid  = findMid(head);
+        Node * left = head;
+        Node * right = mid->next;
+        mid->next = NULL;
+       left =  solve(left);
+       right =  solve(right);
+        return merge(left , right);
+    }
+  public:
+    struct Node *sortDoubly(struct Node *head) {
+        return solve(head);
+    }
+};
