@@ -1,0 +1,51 @@
+Question ::  Arrange Consonants and Vowels
+
+Given a singly linked list having n nodes containing english alphabets ('a'-'z'). Rearrange the linked list in such a way that all the vowels come before the consonants while maintaining the order of their arrival. 
+
+Complexity::
+Time complexity:
+    O(N)
+Space complexity:
+    O(1)
+Code::
+#pragma gcc optimize("03")
+auto init = [](){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    return 'c';
+
+}();
+class Solution {
+  public:
+bool vowel(char ch){
+    if (ch == 'a' || ch == 'A' || ch == 'e' || ch == 'E'
+        || ch == 'i' || ch == 'I' || ch == 'o' || ch == 'O'
+        || ch == 'u' || ch == 'U') {
+ 
+      return 1;
+    }
+    return 0;
+}
+    struct Node* arrangeCV(Node* head) {
+        Node * vow = new Node('a');
+        Node * cont = new Node('b');
+        Node * ans = vow;
+        Node * temp = head;
+        Node * ans2 = cont;
+        while(temp){
+            if(vowel(temp->data)){
+                vow->next = temp;
+                vow = vow->next;
+            }
+            else{
+                cont->next = temp;
+                cont = cont->next;
+            }
+            temp = temp->next;
+        }
+        cont->next = NULL;
+        vow->next = ans2->next;
+        return ans->next;
+    }
+};
