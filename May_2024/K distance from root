@@ -1,0 +1,34 @@
+Questions : K distance from root
+
+Given a binary tree having n nodes and an integer k. Print all nodes that are at distance k from the root (root is considered at distance 0 from itself). Nodes should be printed from left to right.
+
+Time Complexity : O(n)
+Space Complexity : O(n)
+
+
+Code : 
+class Solution
+{
+    public:
+    // function should print the nodes at k distance from root
+    vector<int> Kdistance(struct Node *root, int k)
+    {
+        vector<int>v;
+        queue<Node*>q;
+        q.push(root);
+        int cnt =0;
+        while(!q.empty()){
+            int p = q.size();
+            for(int i =0 ; i<p ; i++){
+                Node * front = q.front();
+                q.pop();
+                if(cnt == k )v.push_back(front->data);
+                if(front->left)q.push(front->left);
+                if(front->right)q.push(front->right);
+                
+            }
+             cnt++;  
+        }
+        return v;
+    }
+};
