@@ -1,0 +1,29 @@
+Question : Construct Binary Tree from Inorder and Postorder
+
+Time Complexity - O(N)
+Space Complexity - O(N)
+code : 
+class Solution
+{   int position( int in [] , int k , int n){
+    for(int i=0 ; i<n ; i++){
+        if(in[i] == k)return i;
+    }
+    return -1;
+}
+    public:
+    Node * solve(int in[] , int post[] , int &root ,int left, int right , int &n){
+        if(left > right or root<0)return NULL;
+        
+        int element = post[root--];
+        Node * newroot = new  Node(element);
+        int posi = position(in , element , n);
+        newroot->right = solve(in , post , root ,posi+1 , right , n);
+        newroot->left = solve(in , post ,root ,left, posi -1 , n );
+        
+        return newroot;
+    }
+    Node *buildTree(int in[], int post[], int n) {
+       int root =n-1;
+       return solve(in , post , root , 0 , n-1 , n);
+    }
+};
