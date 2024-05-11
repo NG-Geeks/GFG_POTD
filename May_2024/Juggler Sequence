@@ -1,0 +1,27 @@
+Problem :: Juggler Sequence
+Juggler Sequence is a series of integers in which the first term starts with a positive integer number a and the remaining terms
+are generated from the immediate previous term using the below recurrence relation:
+
+
+Time Complexity :: O(N)
+space Complexity :: O(1) // Ignoring the space used for storing the vector which we have to return
+
+Code ::
+class Solution {
+  public:
+    vector<int> jugglerSequence(int n) {
+        vector<int>v = {n};
+        int num =n;
+        while(num!=1){
+            if(num%2){
+                num =floor(sqrt( num*1LL*num*num));
+                v.push_back(num);
+            }
+            else{
+                num =floor(sqrt(num));
+                v.push_back(num);
+            }
+        }
+        return v;
+    }
+};
