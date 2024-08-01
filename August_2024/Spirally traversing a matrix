@@ -1,0 +1,53 @@
+Problem :: Spirally traversing a matrix
+Difficulty: MediumAccuracy: 35.2%Submissions: 262K+Points: 4
+You are given a rectangular matrix, and your task is to return an array while traversing the matrix in spiral form.
+
+
+Time Complexity :: O(r*c)
+Space Complexity :: O(r*c) // including the space used to store the ans
+
+Code ::
+class Solution {
+  public:
+    vector<int> spirallyTraverse(vector<vector<int> > &matrix) {
+        vector<int>ans;
+        int r = matrix.size();
+        int c = matrix[0].size();
+        int total=r*c;
+        int rowstart=0;
+        int rowend=r-1;
+        int colstart=0;
+        int colend=c-1;
+        int count=0;
+        
+        while(count<total){
+            
+            for(int j=colstart;count<total && j<=colend;  j++){
+                ans.push_back(matrix[rowstart][j]);
+                    count++;
+            }
+            rowstart++;
+             
+            for(int i=rowstart;count<total && i<=rowend;  i++){
+                ans.push_back(matrix[i][colend]);
+                    count++;
+            }
+            colend--;
+             
+            for(int j=colend;count<total && j>=colstart;   j--){
+                ans.push_back(matrix[rowend][j]);
+                    count++;
+            }
+            rowend--;
+            
+            for(int i=rowend;count<total && i>=rowstart;   i--){
+                ans.push_back(matrix[i][colstart]);
+                    count++;
+            }
+            colstart++;
+            
+        }
+        return ans;
+
+    }
+};
