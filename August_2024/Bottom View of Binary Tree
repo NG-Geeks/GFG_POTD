@@ -1,0 +1,45 @@
+PROBLEM :: Bottom View of Binary Tree
+Difficulty: MediumAccuracy: 54.18%Submissions: 241K+Points: 4
+Given a binary tree, return an array where elements represent the bottom view of the binary tree from left to right.
+Note: If there are multiple bottom-most nodes for a horizontal distance from the root, then the latter one in the level traversal is considered. For example, in the below diagram, 3 and 4 are both the bottommost nodes at a horizontal distance of 0, here 4 will be considered.
+
+TIME COMPLEXITY :: O(N)
+SPACE COMPLEXITY :: O(N)
+
+CODE :: class Solution {
+  public:
+    vector <int> bottomView(Node *root) {
+         vector<int>ans;
+         if(root == NULL)
+           return ans;
+       
+       //create mapping of horizontal distance and root->data
+       map<int,int>topNode;
+       queue<pair<Node* ,int>>q;// pair of root and horizontal distance
+       q.push(make_pair(root,0));
+       
+       while(!q.empty()){
+           pair<Node* ,int> temp = q.front();
+           q.pop();
+           Node * frontNode  = temp.first;
+           int hd  = temp.second;
+           
+        //   if(topNode.find(hd)==topNode.end())
+              topNode[hd]=frontNode->data;
+              
+           // Call for left side
+            if(frontNode->left)
+              q.push(make_pair(frontNode->left, hd -1 ));
+              
+           // Call for right side
+           if(frontNode->right)
+              q.push(make_pair(frontNode->right,hd+1));
+       }
+       
+       for(auto i : topNode)
+            ans.push_back(i.second);
+       
+       
+       return ans;
+    }
+};
