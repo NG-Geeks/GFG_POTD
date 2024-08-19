@@ -1,0 +1,110 @@
+PROBLEM :: Kth Smallest
+Difficulty: MediumAccuracy: 35.17%Submissions: 616K+Points: 4
+Given an array arr[] and an integer k where k is smaller than the size of the array, the task is to find the kth smallest element in the given array. It is given that all array elements are distinct.
+
+Follow up: Don't solve it using the inbuilt sort function.
+
+Code ::
+// Approach 1 : Time Complexity :: O(N+ maxelement)
+class Solution {
+  public:
+    // arr : given array
+    // k : find kth smallest element and return using this function
+    int kthSmallest(vector<int> &arr, int k) {
+        int maxi = *max_element(arr.begin() , arr.end());
+        vector<bool>v(maxi+1, 0);
+        for(auto i:arr){
+            v[i]=1;
+        }
+        for(int i=0 ; i<maxi+1 ; i++){
+            if(v[i]){
+                k--;
+                if(k==0)return i;
+            }
+        }
+        return -1;
+    }
+};
+
+
+
+// Approach 2 : using merge sort O(N* log N)
+void merge(int *arr, int s ,int e){
+    int mid=(s+e)/2;
+    int len1 = mid-s+1;
+    int len2 = e-mid;
+    
+    int *first=new int [len1];
+    int *second=new int [len2];
+   
+    int mainarridx=s;
+        
+    for(int i=0;i<len1;i++){
+        first[i]=arr[mainarridx++];
+    }
+    mainarridx=mid+1;
+       
+      for(int i=0;i<len2;i++){
+        second[i]=arr[mainarridx++];
+    }
+    
+    int idx1=0;
+    int idx2=0;
+    mainarridx=s;
+
+     while(idx1< len1 && idx2 <len2){
+       
+        if(first[idx1]<second[idx2])
+            arr[mainarridx++]=first[idx1++];
+        else
+            arr[mainarridx++]=second[idx2++];
+        
+    }
+    while(idx1<len1){
+         arr[mainarridx++]=first[idx1++];
+    }
+      while(idx2<len2){
+         arr[mainarridx++]=second[idx2++];
+    }
+}
+void solve(int *arr , int s , int e){
+     if(s>=e)
+         return ;
+    int mid=(s+e)/2;
+    //left part
+    solve(arr, s, mid);
+    // right part
+    solve(arr, mid+1,e);
+    
+    merge(arr,s,e);
+    
+}
+class Solution{
+    public:
+    int kthSmallest(int arr[], int l, int r, int k) {
+        solve(arr,l,r);
+        return arr[k-1];
+    }
+};
+
+
+// APPROACH 3 : USING PRIORITY_QUEUE time
+
+class Solution{
+    public:
+    int kthSmallest(int arr[], int l, int r, int k) {
+        priority_queue<int>pq;
+        for(int i=0;i<k;i++){
+            pq.push(arr[i]);
+        }
+        
+        for(int i=k;i<=r;i++){
+            if(arr[i]<pq.top()){
+                pq.pop();
+                pq.push(arr[i]);
+            }
+        }
+        
+        return pq.top();  
+    }
+};
