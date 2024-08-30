@@ -1,0 +1,89 @@
+
+Problem :: N-Queen Problem
+Difficulty: HardAccuracy: 35.43%Submissions: 77K+Points: 8
+The n-queens puzzle is the problem of placing n queens on a (n×n) chessboard such that no two queens can attack each other.
+Given an integer n, find all distinct solutions to the n-queens puzzle. Each solution contains distinct board configurations of the n-queens placement, where the solutions are a permutation of [1,2,3..n] in increasing order, here the number in the ith place denotes that the ith-column queen is placed in the row with that number. 
+For eg below figure represents a chessboard [3 1 4 2]
+
+Time Complexity :: O(N^2)
+
+Space Complexity :: O(N^2)
+
+Code ::
+class Solution{
+    bool check( vector<vector<int>>&board,int n,int row,int col){
+          for(int i=0;i<n;i++){
+            if(board[row][i]!=0){
+                return false;
+            }
+        }
+        for(int i=0;i<n;i++){
+            if(board[i][col]!=0){
+                return false;
+            }
+        }
+        int x = row;
+        int y = col;
+        
+        // for diagonal
+        while(y>=0 and x>=0){
+            if(board[x][y]!=0)
+                return 0;
+              x--;
+            y--;
+            
+        }
+         x =row;
+        y= col;
+       while(x<n and y>=0){
+               if(board[x][y]!=0)
+                   return 0;
+           x++;
+           y--;
+       }
+        x =row;
+        y= col;
+       while(x>=0 and y<n){
+               if(board[x][y]!=0)
+                   return 0;
+           x--;
+           y++;
+       }
+         x =row;
+        y= col;
+       while(x<n and y<n){
+               if(board[x][y]!=0)
+                   return 0;
+           x++;
+           y++;
+       }
+        return 1;
+    }
+    void solve(vector<vector<int>>&ans, vector<vector<int>>&board,int n,int col ){
+            if(col==n){
+                vector<int>v;
+                for(int i=0 ; i<n ; i++){
+                    for(int j=0 ; j<n ; j++){
+                        if(board[i][j]==1)v.push_back(j+1);
+                    }
+                }
+                ans.push_back(v);
+                return ;
+            }
+        for(int row=0;row<n;row++){
+            if(check(board,n, row,col)){
+                board[row][col]=1;
+                solve(ans,board,n,col+1);
+                board[row][col ]=0;
+            }
+        }
+    }
+public:
+    vector<vector<int>> nQueen(int n) {
+       vector<vector<int>>board(n , vector<int>(n,0)) , ans;
+       solve(ans,board,n,0 );
+       sort(begin(ans) , end(ans));
+       return ans;
+
+    }
+};
