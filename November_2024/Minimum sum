@@ -1,0 +1,70 @@
+Problem :: Minimum sum
+Difficulty: MediumAccuracy: 17.14%Submissions: 120K+Points: 4
+Given an array arr[] such that each element is in the range [0 - 9], 
+find the minimum possible sum of two numbers formed using the elements of the array.
+All digits in the given array must be used to form the two numbers. Return a string without leading zeroes.
+
+Tiem Complexity :: O(N)
+Space Complexity :: O(N)
+
+Solution :: 
+class Solution {
+    string solve(string s , string t){
+        // 35 + 47
+        reverse(begin(s),end(s));
+        reverse(begin(t),end(t));
+        int i =0 , j=0;
+        int carry =0;
+        string stt = "";
+        while(i<s.size() && j<t.size()){
+           int sum = (s[i++]-'0') + (t[j++]-'0')+ carry;
+           carry = sum/10;
+           sum = sum%10;
+           stt += sum + '0';
+        }
+         while(i<s.size()){
+           int sum = (s[i++]-'0') + carry;
+           carry = sum/10;
+           sum = sum%10;
+           stt += sum + '0';
+        }
+         while( j<t.size()){
+           int sum =  (t[j++]-'0')+ carry;
+           carry = sum/10;
+           sum = sum%10;
+           stt += sum + '0';
+        }
+        while(carry){
+            stt += carry%10 + '0';
+            carry/=10;
+            
+        }
+        reverse(begin(stt),end(stt));
+        return stt;
+    }
+  public:
+    string minSum(vector<int> &arr) {
+         sort(begin(arr),end(arr));
+         
+         string s ="" , t="";
+         for(int i=0 ; i<arr.size() ; i++){
+             if(i&1){
+                 s += arr[i]+'0';
+             }
+             else{
+                 t += arr[i]+'0';
+             }
+         }
+         string st = "";
+         string stt="";
+            int i=0 ; 
+            while(i<s.size() && s[i]=='0')i++;
+            st = s.substr(i);
+            i=0;
+            while(i<t.size() && t[i]=='0')i++;
+            stt = t.substr(i);
+        
+        st  = solve(st , stt);
+         return st ;
+    }
+};
