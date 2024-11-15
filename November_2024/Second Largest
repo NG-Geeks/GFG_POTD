@@ -1,0 +1,27 @@
+Problem :: Second Largest
+Difficulty: EasyAccuracy: 26.72%Submissions: 779K+Points: 2
+Given an array of positive integers arr[], return the second largest element from the array. If the second largest element doesn't exist then return -1.
+
+Note: The second largest element should not be equal to the largest element.
+
+Time Complexity :: O(N)
+Space Complexity :: O(1)
+
+
+Code :: 
+class Solution {
+  public:
+    // Function returns the second
+    // largest elements
+    int getSecondLargest(vector<int> &arr) {
+        int maxi = INT_MIN , maxi2 = INT_MIN;
+        for(int i=0 ; i<arr.size() ; i++){
+            if(maxi<arr[i]){
+                maxi2 = maxi;
+                maxi = arr[i];
+            }
+            else if(maxi2<arr[i] && arr[i]!=maxi)maxi2 =arr[i];
+        }
+        return maxi2==INT_MIN?-1:maxi2;
+    }
+};
