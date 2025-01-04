@@ -1,0 +1,43 @@
+Problem :: Count all triplets with given sum in sorted array
+Given a sorted array arr[] and a target value, the task is to count triplets (i, j, k) of valid indices, such that arr[i] + arr[j] + arr[k] = target and i < j < k.
+Time Complexity :: O(N * log N)
+Space Complexity :: O(1)
+
+Code :: 
+class Solution {
+  public:
+    int countTriplets(vector<int> &nums, int target) {
+        int n = nums.size();
+        int cnt = 0;
+        for(int i=0;i<n-2;i++){
+                int low=i+1;
+                int high=n-1;
+                int tar=target-nums[i];
+                while(low<high){
+                    if(nums[low]+nums[high] == tar){
+                        if(nums[low] == nums[high]){
+                            int len = high - low +1;
+                            cnt += (len * (len-1))/2;
+                            break;
+                        }
+                        int leftcnt=1;
+                        while(low < high && nums[low] == nums[low+1]){
+                            low++;
+                            leftcnt++;
+                        }
+                        int rightcnt=1;
+                        while(low < high && nums[high] == nums[high-1]){
+                            high--;
+                            rightcnt++;
+                        }
+                        cnt += (leftcnt * rightcnt);
+                        low++;high--;
+                    }
+                    else if(nums[low]+nums[high]>tar) high--;
+                    else low++;
+                }
+            
+            }
+        return cnt;
+    }
+};
