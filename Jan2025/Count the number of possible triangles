@@ -1,0 +1,32 @@
+
+Problem :: 
+Count the number of possible triangles
+Given an integer array arr[]. Find the number of triangles that can be formed with three different array elements as lengths of three sides of the triangle. 
+
+A triangle with three given sides is only possible if sum of any two sides is always greater than the third side.
+
+Time Complexity :: O(N^2)
+Space Complexity :: O(1)
+
+Code :: 
+class Solution {
+  public:
+    int countTriangles(vector<int>& arr) {
+        sort(begin(arr),end(arr));
+        int cnt=0;
+         for(int i = arr.size() - 1 ; i>=0 ; i--){
+             int tar = arr[i];
+             int low = 0 , high = i-1 ;
+                 while(low<high){
+                    if(arr[low]+arr[high] >  tar){
+                       cnt += high - low;
+                       high--;
+                    }
+                    else if(arr[low] + arr[high] < tar) low++;
+                    else low++;
+                }
+            }
+         
+         return cnt;
+    }
+};
