@@ -1,0 +1,31 @@
+Problem :: Reverse a linked list
+Given the head of a linked list, the task is to reverse this list and return the reversed head.
+
+Time Complexity :: O(N)
+Space Complexity :: O(1)
+
+CODE :: 
+class Solution {
+  public:
+    Node* reverseList(struct Node* head) {
+        
+        //1.  Recursive solution 
+            if (head == nullptr || head->next == nullptr)
+            return head;
+            Node* revHead = reverseList(head->next);
+            head->next->next = head;
+            head->next = nullptr;
+            return revHead;
+        
+        //2.  Loop Solution 
+            Node *prev  = NULL;
+            Node * temp = head;
+            while(temp!=NULL){
+                Node * nex = temp->next;
+                temp->next =prev;
+                prev= temp;
+                temp =nex;
+            }
+            return prev;
+    }
+};
