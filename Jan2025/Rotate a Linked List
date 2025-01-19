@@ -1,0 +1,31 @@
+Problem :: Rotate a Linked List
+Given the head of a singly linked list, your task is to left rotate the linked list k times.
+
+Time Complexity :: O(N)
+Space Complexity :: O(N)
+
+Code :: 
+class Solution {
+  public:
+    Node* rotate(Node* head, int k) {
+        deque<int>v;
+        Node * temp =head;
+        while(temp){
+            v.push_back(temp->data);
+            temp = temp->next;
+        }
+        int n = v.size();
+        k = k % n;
+        for(int i=0 ; i<k ; i++){
+            v.push_back(v.front());
+            v.pop_front();
+        }
+        temp = head;
+        while(temp){
+            temp ->data = v.front();
+            temp = temp->next;
+            v.pop_front();
+        }
+        return head;
+    }
+};
