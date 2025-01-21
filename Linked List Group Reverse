@@ -1,0 +1,54 @@
+PROBLEM :: Linked List Group Reverse
+Given the head a linked list, the task is to reverse every k node in the linked list. If the number of nodes is not a multiple of k then the left-out nodes in the end, should be considered as a group and must be reversed.
+
+TIME cOMPLEXITY :: O(N)
+SPACE COMPLEXITY :: O(N/K)
+
+Code :: 
+class Solution {
+    Node * reverse(Node *head){
+        Node * prev = NULL;
+        Node * next = head;
+        Node * temp = head;
+        while(temp){
+            next = temp->next;
+            temp ->next= prev;
+            prev = temp;
+            temp = next;
+        }
+        return prev;
+    }
+  public:
+    Node *reverseKGroup(Node *head, int k) {
+           if (!head || k <= 1) return head; // Base case: no need to reverse
+
+    Node* temp = head;
+    int count = 0;
+
+    // Check if there are k nodes in the current segment
+    while (temp && count < k) {
+        count++;
+        temp = temp->next;
+    }
+
+    // Reverse the current group (even if count < k)
+    Node* prev = NULL;
+    Node* curr = head;
+    Node* next = NULL;
+
+    for (int i = 0; i < count; i++) {
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+
+    // Connect the reversed group to the rest of the list
+    if (next) {
+        head->next = reverseKGroup(next, k);
+    }
+
+    return prev; // Return the new head of the reversed group
+
+    }
+};
