@@ -1,0 +1,54 @@
+Problem :: Add Number Linked Lists
+Given the head of two singly linked lists num1 and num2 representing two non-negative integers. The task is to return the head of the linked list representing the sum of these two numbers.
+
+For example, num1 represented by the linked list : 1 -> 9 -> 0, similarly num2 represented by the linked list: 2 -> 5. Sum of these two numbers is represented by 2 -> 1 -> 5.
+
+Note: There can be leading zeros in the input lists, but there should not be any leading zeros in the output list
+
+Time Complexity :: O(N)
+Space Complexity ::O(1)
+
+
+Code :: 
+class Solution {
+    void reverse(Node*& head) {
+        Node* prev = nullptr;
+        Node* current = head;
+        Node* next = nullptr;
+        while (current != nullptr) {
+            next = current->next;
+            current->next = prev;
+            prev = current;
+            current = next;
+        }
+        head = prev;
+    }
+  public:
+    Node* addTwoLists(Node* num1, Node* num2) {
+      reverse(num1);
+      reverse(num2);
+      int c = 0;
+      Node* head = new Node(0);
+      Node* temp = head; 
+  
+      while (num1 || num2 || c) {
+          int val = c;
+          if (num1) {
+              val += num1->data;
+              num1 = num1->next;
+          }
+          if (num2) {
+              val += num2->data;
+              num2 = num2->next;
+          }
+          c = val / 10;
+          val = val % 10;
+          Node* n = new Node(val);
+          temp->next = n;
+          temp = n;
+      }
+      reverse(head->next);
+      while(head->data==0)head = head->next;
+      return head;
+    }
+};
