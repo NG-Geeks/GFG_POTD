@@ -1,0 +1,24 @@
+Problem :: Maximum path sum from any node
+Given a binary tree, the task is to find the maximum path sum. The path may start and end at any node in the tree.
+
+Time Complexity :: 
+Space Complexity :: 
+
+Code :: 
+class Solution {
+    int solve(Node * root , int &maxi){
+        if(!root)return 0;
+        int leftsum = solve(root->left , maxi);
+        int rightsum = solve(root->right , maxi);
+        if(leftsum > 0 && rightsum > 0)maxi = max(maxi , root -> data + leftsum + rightsum);
+        else if(leftsum < 0 && rightsum < 0)maxi = max(maxi , root->data );
+        else maxi = max(maxi ,root->data + max(leftsum , rightsum));
+        return max(0 , root->data + max(leftsum , rightsum));
+    }
+  public:
+    int findMaxSum(Node *root) {
+       int maxi = INT_MIN;
+       solve(root , maxi);
+       return maxi;
+    }
+};
