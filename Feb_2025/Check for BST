@@ -1,0 +1,39 @@
+Problem :: Check for BST
+Difficulty: EasyAccuracy: 25.37%Submissions: 555K+Points: 2Average Time: 30m
+Given the root of a binary tree. Check whether it is a BST or not.
+Note: We are considering that BSTs can not contain duplicate Nodes.
+A BST is defined as follows:
+
+The left subtree of a node contains only nodes with keys less than the node's key.
+The right subtree of a node contains only nodes with keys greater than the node's key.
+Both the left and right subtrees must also be binary search trees.
+
+
+Time Complexity ::O(N)
+Space Complexity :: O(1)
+
+ Code :: 
+class Solution {
+    vector<int>v;
+    void solve(Node * root){
+        
+        if(!root)return ;
+        solve(root->left);
+        v.push_back(root->data);
+        solve(root->right);
+    }
+  public:
+    bool isBST(Node* root) {
+        solve(root);
+        int maxi = 0;
+        for(int i=0 ; i<v.size()-1 ; i++){
+            if(v[i]>=v[i+1] || maxi>=v[i+1]){
+                return 0;
+            }
+            else{
+                maxi = max(v[i] , maxi);
+            }
+        }
+        return 1;
+    }
+};
