@@ -1,0 +1,21 @@
+Problem :: k-th Smallest in BST
+Given a BST and an integer k, the task is to find the kth smallest element in the BST. If there is no kth smallest element present then return -1.
+
+Time Complexity :: O(N)
+Space Complexity :: O(N)
+
+Code :: 
+class Solution {
+    void solve(Node * root , int k , vector<int>&v){
+        if(!root)return ;
+        solve(root->left , k , v);
+        v.push_back(root->data);
+        solve(root->right , k , v);
+    }
+  public:
+    int kthSmallest(Node *root, int k) {
+        vector<int>v;
+        solve(root , k , v);
+        return k>v.size() ?-1 : v[k-1] ;
+    }
+};
