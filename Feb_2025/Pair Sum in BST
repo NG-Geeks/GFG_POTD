@@ -1,0 +1,41 @@
+
+Problem : Pair Sum in BST
+Given a Binary Search Tree(BST) and a target. Check whether there's a pair of Nodes in the BST with value summing up to the target. 
+Time Complexity :: O(N * log N)
+Space Complexity :: O(N)
+
+Code :: 
+class Solution {
+    void solve(Node * root , vector<int>&v){
+        if(!root)return ;
+        solve(root->left , v);
+        v.push_back(root->data);
+        solve(root->right ,v);
+    }
+    int binsearch(vector<int>&v , int  target){
+        int low = 0 , high = v.size()-1 ; 
+        while(low<high){
+            int mid = low + (high - low)/2;
+            if(v[mid] == target){
+                return mid;
+            }
+            else if(v[mid]>target){
+                 high = mid-1;
+            }
+            else{
+                low = mid + 1;
+            }
+        }
+        return -1;
+    }
+  public:
+    bool findTarget(Node *root, int target) {
+        vector<int>v;
+        solve(root , v);
+        for(int i =0 ; i<v.size() ;i++){
+            int ind = binsearch(v , target - v[i]);
+            if(ind != -1 && ind!=i)return 1;
+        }
+        return 0;
+    }
+};
