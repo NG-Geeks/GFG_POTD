@@ -1,0 +1,50 @@
+PROBLEM :: Longest Increasing Subsequence
+Given an array arr[] of non-negative integers, the task is to find the length of the Longest Strictly Increasing Subsequence (LIS).
+
+A subsequence is strictly increasing if each element in the subsequence is strictly less than the next element.
+
+
+TIME COMPLEXITY :: o(N) // SOLUTION 2
+SPACE COMPLEXITY :: o(N) 
+
+
+Code :: 
+lass Solution {
+    int solve(vector<int>&arr , int i , int prev ,vector<vector<int>>&dp){
+        if(i>=arr.size())return 0;
+        if(dp[i][prev+1]!=-1)return dp[i][prev+1];
+        
+        int taken=0;
+        if(prev == -1 || arr[i]>arr[prev])taken  = 1 + solve(arr , i+1 ,i , dp);
+        
+        int nottaken = solve(arr , i+1 , prev , dp);
+        
+        return dp[i][prev+1] = max(taken , nottaken);
+    }
+  public:
+    int lis(vector<int>& a) {
+        // SOLUTION 1
+         vector<vector<int>>dp(arr.size()+1 , vector<int>(arr.size()+1 , -1));
+        return solve(arr , 0 , -1 , dp);
+
+        // SOLUTION 2
+        int n = a.size();
+        if(n==0)
+            return 0;
+            
+        vector<int>ans;
+        ans.push_back(a[0]);
+        for(int i=1;i<n;i++){
+            if(a[i]>ans.back()){
+                ans.push_back(a[i]);
+            }
+            else{
+                
+                int index = lower_bound(ans.begin(),ans.end(),a[i])-ans.begin();
+                ans[index]= a[i];
+            }
+        }
+        return ans.size();
+    
+    }
+};
