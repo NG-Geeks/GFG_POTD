@@ -1,0 +1,43 @@
+PROBLEM :: EDIT DISTANCE
+Given two strings s1 and s2. Return the minimum number of operations required to convert s1 to s2.
+The possible operations are permitted:
+
+Insert a character at any position of the string.
+Remove any character from the string.
+Replace any character from the string with any other character.
+
+TIME COMPLEXITY :: O(N)
+SPACE COMPLEXITY :: O(MAX(A.LENGTH() , B.LENGTH())
+
+
+
+
+CODE:: 
+  int solveTab(string a , string b){
+        //  vector<vector<int>>dp(a.length()+1,vector<int>(b.length()+1,0));
+         vector<int>curr(b.length()+1,0);
+          vector<int>next(b.length()+1,0);
+        for(int i=0;i<b.length();i++)
+           next[i] = b.length()-i;
+
+       for(int i=a.length()-1;i>=0;i--){
+           for(int j=b.length()-1;j>=0;j--){
+               curr[b.length()] = a.length()-i;  // here for every row last column should be a.length-i  so here in only two rows exist therefore inlcuded in this part so it can be updated according to base case  
+               int ans  =0;
+                if(a[i]==b[j]){
+                  ans= next[j+1];
+
+                }  
+                else{
+                    int ansinsert = 1+curr[j+1];
+                    int ansdelete = 1+next[ j];
+                    int ansreplace =1+ next[j+1] ;
+                    
+                    ans = min(ansinsert,min(ansdelete,ansreplace));
+                }
+               curr[j]=ans;
+          }
+          next =curr;
+       }     
+        return next[0];
+    }
