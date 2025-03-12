@@ -1,0 +1,47 @@
+PROBLEM :: Min Cost Climbing Stairs
+Given an array of integers cost[] where cost[i] is the cost of the ith step on a staircase. Once the cost is paid, you can either climb one or two steps. Return the minimum cost to reach the top of the floor.
+Assume 0-based Indexing. You can either start from the step with index 0, or the step with index 1.
+
+TIME COMPLEXITY ::O(N)
+SPACE COMPLEXITRY :: O(N)
+
+CODE :: 
+class Solution {
+    vector<int>dp;
+    int solve(vector<int>&cost , int i , int n){
+        if(i>=n)return 0;
+        if(dp[i]!=-1)return dp[i];
+        return dp[i] = cost[i] + min(solve(cost , i+1 , n ) , solve(cost , i+2 , n));
+    }
+    int solve(vector<int>&cost){
+        int n =  cost.size();
+        vector<int>dp(n+1 , 0);
+        dp[n-1] = cost[n-1];
+        dp[n-2] = cost[n-2];
+        for(int i = n-3 ; i>=0 ; i--){
+            dp[i] = cost[i] + min(dp[i+1] , dp[ i+2] );
+        }
+        return min(dp[0], dp[1]);
+    }
+    int solvespaceoptimized(vector<int>&cost){
+        int n = cost.size();
+        if (n == 0) return 0;
+        if (n == 1) return cost[0];
+        
+        int prev2 = cost[n - 1];  
+        int prev1 = cost[n - 2];  
+        for (int i = n - 3; i >= 0; i--) {
+            int current = cost[i] + min(prev1, prev2);  
+            prev2 = prev1; 
+            prev1 = current; 
+        }
+        return min(prev1, prev2);
+    }
+  public:
+    int minCostClimbingStairs(vector<int>& cost) {
+        // int n =  cost.size();
+        // dp.resize(n + 1 , -1);
+        // return min(solve(cost , 0  , n) , solve(cost , 1 , n));
+        return solvespaceoptimized(cost);
+    }
+};
