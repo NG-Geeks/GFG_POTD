@@ -1,0 +1,28 @@
+PROBLEM :: 0 - 1 Knapsack Problem
+Given n items, each with a specific weight and value, and a knapsack with a capacity of W, the task is to put the items in the knapsack such that the sum of weights of the items <= W and the sum of values associated with them is maximized. 
+Note: You can either place an item entirely in the bag or leave it out entirely. Also, each item is available in single quantity.
+
+TIME COMPLEXITY :: O(N)
+SPACE COMPLEXITY :: O(N)
+
+CODE :: 
+class Solution {
+    int solve(int w , vector<int>&val , vector<int>&wt ,  int i , vector<vector<int>>&dp){
+        if(i >= val.size() || w <= 0) return 0;
+        if(dp[i][w] != -1) return dp[i][w];
+        
+        int nottaken = solve(w, val, wt, i + 1, dp);
+        
+        int taken = 0;
+        if(w >= wt[i]){
+            taken = val[i] + solve(w - wt[i], val, wt, i + 1, dp);
+        }
+        
+        return dp[i][w] = max(taken, nottaken);
+    }
+  public:
+    int knapsack(int W, vector<int> &val, vector<int> &wt) {
+        vector<vector<int>>dp(val.size() , vector<int>(W+1 , -1));
+        return solve( W , val , wt , 0 , dp);
+    }
+};
