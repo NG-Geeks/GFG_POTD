@@ -1,0 +1,77 @@
+PROBLEM : Sort a linked list of 0s, 1s and 2s
+Given the head of a linked list where nodes can contain values 0s, 1s, and 2s only. Your task is to rearrange the list so that all 0s appear at the beginning, followed by all 1s, and all 2s are placed at the end.
+
+TIME COMPLEXITY :: O(n)
+SPACE COMPLEXITY :: O(1)
+
+
+CODE :: 
+//   APPROACH 1  LINKING CHNAGE
+
+class Solution
+{
+    public:
+    Node* segregate(Node *head) {
+        Node *zeroHead = new Node(0), *oneHead = new Node(0), *twoHead = new Node(0);
+        Node *zero = zeroHead, *one = oneHead, *two = twoHead;
+
+        Node* temp = head;
+        while (temp) {
+            if (temp->data == 0) {
+                zero->next = temp;
+                zero = zero->next;
+            } else if (temp->data == 1) {
+                one->next = temp;
+                one = one->next;
+            } else {
+                two->next = temp;
+                two = two->next;
+            }
+            temp = temp->next;
+        }
+
+        // Link the three sublists
+        zero->next = (oneHead->next) ? oneHead->next : twoHead->next;
+        one->next = twoHead->next;
+        two->next = NULL;
+
+        Node* result = zeroHead->next;
+
+        // Delete dummy nodes
+        delete zeroHead;
+        delete oneHead;
+        delete twoHead;
+
+        return result;
+    }
+};
+
+
+
+
+// APPROACH 2   USING ARRAY
+
+class Solution
+{
+    public:
+    //Function to sort a linked list of 0s, 1s and 2s.
+    Node* segregate(Node *head) {
+        
+    int arr[3]={0,0,0};
+    Node*temp = head;
+    while(temp){
+        arr[temp->data]++;
+        temp = temp->next;
+    }
+    temp = head;
+    while(temp){
+        if(arr[0]>0)temp->data = 0,arr[0]--;
+        else if(arr[1]>0)temp->data =1,arr[1]--;
+        else if(arr[2]>0)temp->data = 2,arr[2]--;
+        temp = temp->next;
+    }
+    return head;
+    }
+};
+
+
